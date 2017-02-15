@@ -1,3 +1,12 @@
+# Standing on the shoulders ...
+
+* The docker and distillery part of these notes were gleaned from a tutorial that Paul sent me <https://github.com/plamb/deploying-elixir/blob/master/docs/distill_with_docker_pt1.md>, the Phoenix parts from the Phoenix Dockerfile from the same repo <https://github.com/plamb/deploying-elixir/blob/master/docker/Dockerfile.build.phoenix>.
+* The Phoenix config came from the [Phoenix advanced deployment docs](http://www.phoenixframework.org/docs/advanced-deployment)
+* The setup for Debian came from the [DigitalOcean docs](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-debian-8) although they should be valid for any platform.
+* The nginx setup came from the [Phoenix serving as proxy docs](http://www.phoenixframework.org/docs/serving-your-application-behind-a-proxy)
+
+Thanks to Paul for the help and direction and Scott for suggesting ideas on the env var front.
+
 # Adding Travis support
 
 We can use [Travis CI](https://travisci.org) as our Continuous Integration server. Create an account, attach it to your Github and then flip the switch for this project.
@@ -23,7 +32,7 @@ script:
 First add Distillery to your root **mix.exs** file.
 
 ```elixir
-[{:credo, "~> 0.5", only: [:dev, :test]}, 
+[{:credo, "~> 0.5", only: [:dev, :test]},
  {:distillery, "~> 1.0"}]
 ```
 
@@ -201,10 +210,10 @@ We now want to ensure that all static assets are compiled and built when a relea
 RUN mix do deps.get, deps.compile, compile
 
 # install node dependencies and output static assets
-# do this after mix deps.get since the phoenix & phoenix_html 
+# do this after mix deps.get since the phoenix & phoenix_html
 # node modules reference files in these dependencies
 RUN npm install \
-  && node node_modules/brunch/bin/brunch build \ 
+  && node node_modules/brunch/bin/brunch build \
   && mix phoenix.digest
 
 CMD ["bash"]
