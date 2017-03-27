@@ -1,4 +1,4 @@
-# GenServer
+# OTP and GenServer
 
 ## An introduction to OTP
 OTP = Open Telephony Protocol
